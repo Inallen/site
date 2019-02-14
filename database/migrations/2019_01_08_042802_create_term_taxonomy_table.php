@@ -18,7 +18,7 @@ class CreateTermTaxonomyTable extends Migration
             $table->unsignedInteger('term_id');
             $table->string('term_taxonomy');
             $table->string('term_taxonomy_description')->nullable();
-            $table->unsignedInteger('term_taxonomy_parent')->nullable();
+            $table->unsignedInteger('term_taxonomy_parent')->default(0);
             $table->unsignedInteger('count')->default(0);
             $table->unsignedTinyInteger('term_taxonomy_type')->default(0);
             $table->unsignedTinyInteger('term_taxonomy_status')->default(0);
