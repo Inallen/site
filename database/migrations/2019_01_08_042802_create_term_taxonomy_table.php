@@ -16,9 +16,9 @@ class CreateTermTaxonomyTable extends Migration
         Schema::create('term_taxonomy', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('term_id');
-            $table->unsignedInteger('term_taxonomy_parent')->nullable();
-            $table->string('term_taxonomy')->nullable();
+            $table->string('term_taxonomy');
             $table->string('term_taxonomy_description')->nullable();
+            $table->unsignedInteger('term_taxonomy_parent')->nullable();
             $table->unsignedInteger('count')->default(0);
             $table->unsignedTinyInteger('term_taxonomy_type')->default(0);
             $table->unsignedTinyInteger('term_taxonomy_status')->default(0);

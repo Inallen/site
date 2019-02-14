@@ -19,7 +19,7 @@ class CreateTermsTable extends Migration
             $table->string('term_slug')->nullable();
             $table->string('term_icon')->nullable();
             $table->string('term_entry')->nullable();
-            $table->unsignedInteger('term_parent')->default(0);
+            $table->unsignedInteger('term_group')->default(0);
             $table->unsignedTinyInteger('term_type')->default(0);
             $table->unsignedTinyInteger('term_status')->default(0);
             $table->timestamps();
