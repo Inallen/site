@@ -1,0 +1,10 @@
+{
+    "Username" : "用户名",
+    "Password" : "密码",
+    "Profile" : "个人资料",
+    "Login" : "登录",
+    "Logout" : "退出",
+    "Forgot Your Password?" : "忘记密码?",
+    "Remember Me": "下次自动登录",
+    "Settings": "设置"
+}
