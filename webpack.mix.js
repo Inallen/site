@@ -13,7 +13,7 @@ const mix = require('laravel-mix');
 
 mix.js('resources/js/app.js', 'public/js');
 mix.js('resources/plugins/index.js', 'public/plugins/index.js');
-mix.copyDirectory('resources/plugins/tinymce', 'public/plugins/tinymce');
+mix.copyDirectory('resources/plugins/ckeditor5', 'public/plugins/ckeditor5');
 mix.sass('resources/sass/main.scss', 'public/css');
 mix.sass('resources/sass/style.scss', 'public/css');
 
