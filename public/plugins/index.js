@@ -93,7 +93,9 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-ClassicEditor.create(document.querySelector('.ckeditor'), {// toolbar: [ 'heading', '|', 'bold', 'italic', 'link' ]
+ClassicEditor.create(document.querySelector('.ckeditor'), {
+  // toolbar: [ 'heading', '|', 'bold', 'italic', 'link' ]
+  language: 'zh-cn'
 }).then(function (editor) {
   window.editor = editor;
 }).catch(function (err) {
