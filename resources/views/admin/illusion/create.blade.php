@@ -91,5 +91,4 @@
     <script src="{{ asset('plugins/ckeditor5/ckeditor.js') }}"></script>
     <script src="{{ asset('plugins/ckeditor5/translations/zh-cn.js') }}"></script>
     <script src="{{ asset('plugins/index.js') }}"></script>
-    {{--<link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">--}}
 @endsection
