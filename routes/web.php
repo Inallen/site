@@ -18,6 +18,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::post('/upload', 'Admin\FileController@storeImage')->name('upload');
 
 Route::prefix('admin')->name('admin.')->namespace('Admin')->group(function () {
     Route::resources([

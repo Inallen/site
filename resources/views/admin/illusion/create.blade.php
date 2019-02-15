@@ -87,3 +87,8 @@
         </div>
     </main>
 @endsection
+@section('script')
+    <script src="{{ asset('plugins/tinymce/tinymce.min.js') }}"></script>
+    <script src="{{ asset('plugins/index.js') }}"></script>
+    {{--<link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">--}}
+@endsection

@@ -12,8 +12,8 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js');
-mix.js('resources/js/tinymce.js', 'public/plugins/tinymce.min.js');
-mix.copy('node_modules/tinymce/skins', 'public/plugins/skins');
+mix.js('resources/plugins/index.js', 'public/plugins/index.js');
+mix.copyDirectory('resources/plugins/tinymce', 'public/plugins/tinymce');
 mix.sass('resources/sass/main.scss', 'public/css');
 mix.sass('resources/sass/style.scss', 'public/css');
 

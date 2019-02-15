@@ -22,7 +22,7 @@
 @yield('content')
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="{{ asset('js/main.js') }}"></script>
-<script src="{{ asset('plugins/tinymce.min.js') }}"></script>
 <script src="{{ asset('js/plugins/pace.min.js') }}"></script>
+@yield('script')
 </body>
 </html>
