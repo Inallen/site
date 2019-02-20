@@ -16,7 +16,7 @@ class FileController extends Controller
      */
     public function storeImage(Request $request)
     {
-        $imgpath = request()->file('file')->store('uploads', 'public');
-        return json_encode(['location' => $imgpath]);
+        $path = $request->file('images')->store('images');
+        return $path;
     }
 }

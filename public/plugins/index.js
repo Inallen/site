@@ -95,7 +95,8 @@
 
 ClassicEditor.create(document.querySelector('.ckeditor'), {
   // toolbar: [ 'heading', '|', 'bold', 'italic', 'link' ]
-  language: 'zh-cn'
+  language: 'zh-cn',
+  filebrowserImageUploadUrl: "{{route('upload')}}"
 }).then(function (editor) {
   window.editor = editor;
 }).catch(function (err) {
