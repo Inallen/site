@@ -3053,3 +3053,7 @@
   clip: auto;
 }
 
+#ckfinder-widget {
+  min-height: calc(100vh - 110px);
+}
+

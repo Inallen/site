@@ -19,4 +19,14 @@ class FileController extends Controller
         $path = $request->file('images')->store('images');
         return $path;
     }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function media()
+    {
+        return view('admin.media.ckfinder');
+    }
 }

@@ -24,4 +24,6 @@ Route::prefix('admin')->name('admin.')->namespace('Admin')->group(function () {
     Route::resources([
         'illusion' => 'IllusionController',
     ]);
+
+    Route::get('/media', 'FileController@media')->name('media');
 });
