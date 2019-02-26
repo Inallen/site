@@ -23,6 +23,7 @@
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="{{ asset('js/main.js') }}"></script>
 <script src="{{ asset('js/plugins/pace.min.js') }}"></script>
+@include('layouts.config')
 @yield('script')
 </body>
 </html>

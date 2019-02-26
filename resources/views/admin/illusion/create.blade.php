@@ -16,8 +16,8 @@
             </div>
             <ul class="app-breadcrumb breadcrumb">
                 <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-                <li class="breadcrumb-item">UI</li>
-                <li class="breadcrumb-item"><a href="#">Cards</a></li>
+                <li class="breadcrumb-item">{{ config('ckfinder.backends.default.root') }}</li>
+                <li class="breadcrumb-item"><a href="#">{{ config('ckfinder.backends.default.baseUrl') }}</a></li>
             </ul>
         </div>
         <div class="row">

@@ -1,7 +1,10 @@
 ClassicEditor
     .create( document.querySelector( '.ckeditor' ), {
         // toolbar: [ 'heading', '|', 'bold', 'italic', 'link' ]
-        language: 'zh-cn',
+        language: locale,
+        ckfinder: {
+            uploadUrl: uploadUrl,
+        },
     } )
     .then( editor => {
         window.editor = editor;
