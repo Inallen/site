@@ -20,7 +20,9 @@
     CKFinder.widget( 'ckfinder-widget', {
         width: '100%',
         height: '100%',
-        language: locale
+        skin: 'vali',
+        language: locale,
+
     });
 </script>
 @endsection
