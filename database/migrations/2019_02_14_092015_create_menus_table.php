@@ -19,7 +19,7 @@ class CreateMenusTable extends Migration
             $table->string('menu_slug');
             $table->string('menu_icon');
             $table->string('menu_entry');
-            $table->unsignedInteger('menu_order')->default(0);
+            $table->unsignedInteger('menu_priority')->default(0);
             $table->unsignedInteger('menu_parent')->default(0);
             $table->unsignedTinyInteger('menu_type')->default(0);
             $table->unsignedTinyInteger('menu_status')->default(0);

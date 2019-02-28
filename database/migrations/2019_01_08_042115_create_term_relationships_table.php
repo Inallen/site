@@ -17,7 +17,7 @@ class CreateTermRelationshipsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('object_id');
             $table->unsignedInteger('term_taxonomy_id');
-            $table->unsignedInteger('term_relationship_order')->default(0);
+            $table->unsignedInteger('term_relationship_priority')->default(0);
             $table->unsignedTinyInteger('term_relationship_type')->default(0);
             $table->unsignedTinyInteger('term_relationship_status')->default(0);
             $table->timestamps();

@@ -21,7 +21,7 @@ class CreateIllusionsTable extends Migration
             $table->text('excerpt')->nullable();
             $table->string('thumbnail')->nullable();
             $table->longText('content');
-            $table->unsignedInteger('illusion_order')->nullable();
+            $table->unsignedInteger('illusion_priority')->nullable();
             $table->unsignedTinyInteger('illusion_type')->default(0);
             $table->unsignedTinyInteger('illusion_status')->default(0);
             $table->timestamps();

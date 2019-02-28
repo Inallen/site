@@ -21,7 +21,7 @@ class CreateLinksTable extends Migration
             $table->string('link_title')->nullable();
             $table->string('link_description')->nullable();
             $table->unsignedInteger('link_target')->default(0);
-            $table->unsignedInteger('link_order')->default(0);
+            $table->unsignedInteger('link_priority')->default(0);
             $table->unsignedTinyInteger('link_type')->default(0);
             $table->unsignedTinyInteger('link_status')->default(0);
             $table->timestamps();
