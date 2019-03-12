@@ -1,4 +1,5 @@
 <!-- Sidebar menu-->
+{{ Widget::setRouteName(Request::route()->getName()) }}
 <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
 <aside class="app-sidebar">
     <div class="app-sidebar__user">
@@ -12,7 +13,7 @@
              alt="User Image">
         <div>
             <p class="app-sidebar__user-name">{{ Auth::user()->name }}</p>
-            <p class="app-sidebar__user-designation"></p>
+            <p class="app-sidebar__user-designation"> {{ Request::route()->getName() }}</p>
         </div>
     </div>
     <ul class="app-menu">
@@ -52,5 +53,52 @@
                 <li><a class="treeview-item" href="page-error.html"><i class="icon fa fa-circle-o"></i> Error Page</a></li>
             </ul>
         </li>
+        @foreach (Widget::sideMenusItems() as $sideMenusItems)
+            @if ($sideMenusItems->subMenus->count() > 0)
+
+                    @if ($sideMenusItems->getMenuDisplay())
+                    <li class="treeview is-expanded">
+                        <a class="app-menu__item  active" href="#" data-toggle="treeview">
+                    @else
+                    <li class="treeview">
+                        <a class="app-menu__item" href="#" data-toggle="treeview">
+                    @endif
+                        <i class="app-menu__icon {{ $sideMenusItems->menu_icon }}"></i>
+                        <span class="app-menu__label">{{ $sideMenusItems->menu_title }}</span>
+                        <i class="treeview-indicator fa fa-angle-right"></i>
+                    </a>
+                    <ul class="treeview-menu">
+                        @foreach ($sideMenusItems->subMenus as $subMenusItems)
+                            <li>
+                                @if ($subMenusItems->getMenuDisplay())
+                                    <a class="treeview-item active" href="{{--{{ route($subMenusItems->menu_entry) }}--}}">
+                                @else
+                                    <a class="treeview-item" href="{{--{{ route($subMenusItems->menu_entry) }}--}}">
+                                @endif
+                                    <i class="app-menu__icon {{ $subMenusItems->menu_icon }}"></i>
+                                    {{ $subMenusItems->menu_title }}
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </li>
+            @else
+                <li>
+                    @if ($sideMenusItems->getMenuDisplay())
+                        <a class="app-menu__item active" href="{{--{{ route($sideMenusItems->menu_entry) }}--}}">
+                    @else
+                        <a class="app-menu__item" href="{{--{{ route($sideMenusItems->menu_entry) }}--}}">
+                    @endif
+                        <i class="app-menu__icon {{ $sideMenusItems->menu_icon }}"></i>
+                        <span class="app-menu__label">{{ $sideMenusItems->menu_title }}</span>
+                    </a>
+                </li>
+            @endif
+            {{--@if ($sideMenusItems->menu_entry == Request::route()->getName() )
+
+            @else
+                <li><a class="app-menu__item" href="charts.html"><i class="app-menu__icon {{ $sideMenusItems->menu_icon }}"></i><span class="app-menu__label">{{ $sideMenusItems->menu_title }}</span></a></li>
+            @endif--}}
+        @endforeach
     </ul>
 </aside>

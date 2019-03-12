@@ -25,7 +25,7 @@ class FileController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function media()
+    public function ckfinder()
     {
         return view('admin.media.ckfinder');
     }
