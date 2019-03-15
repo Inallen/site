@@ -12,12 +12,14 @@ class Menu extends Model
      * @var array
      */
     protected $fillable = [
-        'menu_title', 'menu_slug', 'menu_entry',
+        'menu_title',
+        'menu_slug',
+        'menu_entry',
     ];
 
     protected $table = 'menus';
 
-    protected $menuDisplay = false;
+    protected $is_active_menu_item = false;
 
 
     public function subMenus()
@@ -31,21 +33,19 @@ class Menu extends Model
     }
 
     /**
-     * @return mixed
+     * @return bool
      */
-    public function getMenuDisplay()
+    public function isActiveMenuItem()
     {
-        return $this->menuDisplay;
+        return $this->is_active_menu_item;
     }
 
     /**
-     * @param mixed $menuDisplay
+     * @param $is_active_menu_item
      */
-    public function setMenuDisplay($menuDisplay)
+    public function setMenuItemActive($is_active_menu_item)
     {
-        $this->menuDisplay = $menuDisplay;
+        $this->is_active_menu_item = $is_active_menu_item;
     }
-
-
 
 }

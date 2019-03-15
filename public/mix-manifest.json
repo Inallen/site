@@ -1,6 +1,8 @@
 {
+    "/js/admin.illusion.js": "/js/admin.illusion.js",
     "/js/app.js": "/js/app.js",
     "/css/main.css": "/css/main.css",
     "/css/style.css": "/css/style.css",
-    "/plugins/index.js": "/plugins/index.js"
+    "/plugins/index.js": "/plugins/index.js",
+    "/js/vali.js": "/js/vali.js"
 }

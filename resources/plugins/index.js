@@ -7,6 +7,7 @@ ClassicEditor
         },
     } )
     .then( editor => {
+        editor.ui.view.editable.editableElement.style.height = '460px';
         window.editor = editor;
     } )
     .catch( err => {

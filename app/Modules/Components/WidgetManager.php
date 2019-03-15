@@ -32,21 +32,21 @@ class WidgetManager
         foreach ($this->sideMenusItems as $sideMenusItem) {
             if (!empty($this->routeName)) {
                 if ($sideMenusItem->menu_entry == $this->routeName) {
-                    $sideMenusItem->setMenuDisplay(true);
+                    $sideMenusItem->setMenuItemActive(true);
                     return $this->sideMenusItems;
                 }
                 if ($sideMenusItem->subMenus->count() > 0) {
                     foreach ($sideMenusItem->subMenus as $subMenusItem) {
                         if ($subMenusItem->menu_entry == $this->routeName) {
-                            $subMenusItem->setMenuDisplay(true);
-                            $sideMenusItem->setMenuDisplay(true);
+                            $subMenusItem->setMenuItemActive(true);
+                            $sideMenusItem->setMenuItemActive(true);
                             return $this->sideMenusItems;
                         }
                     }
                 }
             }
         }
-        $this->sideMenusItems[0]->setMenuDisplay(true);
+        $this->sideMenusItems[0]->setMenuItemActive(true);
         return $this->sideMenusItems;
     }
 

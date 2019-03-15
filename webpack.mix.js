@@ -12,7 +12,11 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js');
-mix.js('resources/plugins/index.js', 'public/plugins/index.js');
+mix.js('resources/plugins/index.js', 'public/plugins/');
+mix.js('resources/js/vali/admin.illusion.js', 'public/js');
+mix.scripts([
+    'public/js/admin.illusion.js',
+], 'public/js/vali.js');
 mix.copyDirectory('resources/plugins/ckeditor5', 'public/plugins/ckeditor5');
 mix.sass('resources/sass/main.scss', 'public/css');
 mix.sass('resources/sass/style.scss', 'public/css');

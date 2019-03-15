@@ -81,41 +81,55 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./resources/plugins/index.js":
-/*!************************************!*\
-  !*** ./resources/plugins/index.js ***!
-  \************************************/
+/***/ "./resources/js/vali/admin.illusion.js":
+/*!*********************************************!*\
+  !*** ./resources/js/vali/admin.illusion.js ***!
+  \*********************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-ClassicEditor.create(document.querySelector('.ckeditor'), {
-  // toolbar: [ 'heading', '|', 'bold', 'italic', 'link' ]
-  language: locale,
-  ckfinder: {
-    uploadUrl: uploadUrl
-  }
-}).then(function (editor) {
-  editor.ui.view.editable.editableElement.style.height = '460px';
-  window.editor = editor;
-}).catch(function (err) {
-  console.error(err.stack);
+$("#set_featured_image").on("click", function () {
+  selectImageFile();
 });
+
+var selectImageFile = function selectImageFile() {
+  CKFinder.modal({
+    chooseFiles: true,
+    width: 800,
+    height: 600,
+    onInit: function onInit(finder) {
+      finder.on('files:choose', function (evt) {
+        var file = evt.data.files.first();
+        $("#set_featured_image").hide();
+        $("#featured_image").attr('src', file.getUrl()).show();
+        $("#thumbnail").val(file.getUrl());
+      });
+      finder.on('file:choose:resizedImage', function (evt) {
+        var output = document.getElementById('thumbnail');
+        output.value = evt.data.resizedUrl;
+        $("#set_featured_image").hide();
+        $("#featured_image").attr('src', file.getUrl()).show();
+        $("#thumbnail").val(file.getUrl());
+      });
+    }
+  });
+};
 
 /***/ }),
 
-/***/ 1:
-/*!******************************************!*\
-  !*** multi ./resources/plugins/index.js ***!
-  \******************************************/
+/***/ 2:
+/*!***************************************************!*\
+  !*** multi ./resources/js/vali/admin.illusion.js ***!
+  \***************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/mdpi/www/site/resources/plugins/index.js */"./resources/plugins/index.js");
+module.exports = __webpack_require__(/*! /home/mdpi/www/site/resources/js/vali/admin.illusion.js */"./resources/js/vali/admin.illusion.js");
 
 
 /***/ })

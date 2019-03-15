@@ -22,7 +22,6 @@
         height: '100%',
         skin: 'vali',
         language: locale,
-
     });
 </script>
 @endsection
