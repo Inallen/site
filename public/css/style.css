@@ -3058,9 +3058,21 @@
 }
 
 .illusion-featured-image {
+  float: left !important;
+  width: 200px;
   height: 200px;
-  width: 100%;
+  background-color: #FFF;
+  background-clip: padding-box;
   border: 2px solid #ced4da;
   border-radius: 4px;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.form-ckeditor {
+  padding: 0;
+}
+
+.illusion-tile .form-control-label {
+  text-align: right;
 }
 

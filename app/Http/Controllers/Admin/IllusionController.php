@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Illusion;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class IllusionController extends Controller
 {
@@ -24,7 +26,10 @@ class IllusionController extends Controller
      */
     public function index()
     {
-        //
+        $illusions = Illusion::paginate(15);
+        return view('admin.illusion.index',
+            ['illusions' => $illusions]
+        );
     }
 
     /**
@@ -45,7 +50,19 @@ class IllusionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validateIllusion($request);
+        $data = $request->all();
+        $illusion = Illusion::create([
+            'illusion_owner' => Auth::user()->id,
+            'title' => $data['title'],
+            'slug' => isset($data['slug']) ? $data['slug'] : null,
+            'content' => $data['content'],
+            'excerpt' => $data['excerpt'],
+            'thumbnail' => $data['thumbnail'],
+            'illusion_priority' => $data['illusion_priority'],
+            'illusion_status' => $data['illusion_status'],
+        ]);
+        return view('admin.illusion.create', $illusion);
     }
 
     /**
@@ -91,5 +108,18 @@ class IllusionController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    protected function validateIllusion(Request $request)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'slug' => 'nullable|unique:illusion|string',
+            'content' => 'required|string',
+            'excerpt' => 'nullable|string',
+            'thumbnail' => 'nullable|url',
+            'illusion_priority' => 'required|integer',
+            'illusion_status' => 'required|integer',
+        ]);
     }
 }

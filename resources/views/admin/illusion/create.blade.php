@@ -20,58 +20,72 @@
                 <li class="breadcrumb-item"><a href="#">{{ config('ckfinder.backends.default.baseUrl') }}</a></li>
             </ul>
         </div>
-        <div class="col-lg-12">
-            <form class="tile row">
-                <div class="col-lg-8">
-                    <h3 class="tile-title"></h3>
-                    <div class="tile-body">
-                        <div class="form-group">
-                            <input class="form-control" type="text" placeholder="Title">
-                        </div>
-                        <div class="form-group">
-                            <textarea class="form-control ckeditor" placeholder="Content"></textarea>
+        <div class="illusion-tile col-lg-10">
+            <form class="tile" method="POST" action="{{ route('admin.illusion.store') }}">
+                @csrf
+                <h3 class="tile-title"></h3>
+                <div class="tile-body">
+                    <div class="form-group row">
+                        <label class="form-control-label col-sm-2" for="title">Title</label>
+                        <div class="col-sm-9">
+                            <input class="form-control{{ $errors->has('title') ? ' is-invalid' : '' }}" id="title" type="text" name="title" value="{{ old('title') }}" required autofocus>
+                            @if ($errors->has('title'))
+                                <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('title') }}</strong>
+                            </span>
+                            @endif
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="card form-horizontal">
-                        <div class="card-body">
-                        <div class="form-group row">
-                            <div class="col-md-6 row">
-                                <label class="control-label col-sm-6">Visibility</label>
-                                <div class="toggle-flip col-sm-6">
-                                    <label>
-                                        <input type="checkbox"><span class="flip-indecator" data-toggle-on="ON" data-toggle-off="OFF"></span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-6 row">
-                                <label class="control-label col-md-5" for="illusion_priority">Priority</label>
-                                <div class="col-md-6 offset-sm-1" >
-                                    <input class="form-control form-control-sm" id="illusion_priority" type="text" placeholder="Priority">
-                                </div>
+                    <div class="form-group row">
+                        <label class="form-control-label col-sm-2" for="content">Content</label>
+                        <div class="col-sm-9">
+                            <div class="form-ckeditor">
+                                <textarea class="ckeditor" id="content" name="content"></textarea>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label class="form-control-label col-md-4" for="categories">Categories</label>
-                            <input class="form-control col-md-6" id="categories" type="text">
-                        </div>
-                        <div class="form-group row">
-                            <label class="form-control-label col-md-4" for="thumbnail">Featured Image</label>
-                            <img class="col-md-6 illusion-featured-image" id="featured_image" src="" alt="Featured Image" style="display: none">
-                            <button class="btn btn-outline-secondary col-md-6" id="set_featured_image" type="button">Set featured image</button>
-                            <input class="form-control col-md-6" id="thumbnail" type="hidden">
-                        </div>
-                        <div class="form-group row">
-                            <label class="form-control-label col-md-4" for="excerpt">Excerpt</label>
-                            <textarea class="form-control col-md-6" id="excerpt" rows="3"></textarea>
+                    </div>
+                    <div class="form-group row">
+                        <label class="form-control-label col-sm-2" for="excerpt">Excerpt</label>
+                        <div class="col-sm-9">
+                            <textarea class="form-control" id="excerpt" name="excerpt" rows="3"></textarea>
                         </div>
                     </div>
+                    <div class="form-group row">
+                        <label class="form-control-label col-sm-2" for="categories">Categories</label>
+                        <div class="col-sm-9">
+                            <input class="form-control" id="categories" type="text">
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-12">
-                    <button class="btn btn-primary offset-lg-5" type="button">Save</button>
+                    <div class="form-group row">
+                        <label class="form-control-label col-sm-2" for="thumbnail">Featured Image</label>
+                        <div class="col-sm-4">
+                            <img class="illusion-featured-image" id="featured_image" src="" alt="Featured Image" style="display: none">
+                            <button class="btn btn-outline-secondary" id="set_featured_image" type="button">Set featured image</button>
+                            <input class="form-control" id="thumbnail" name="thumbnail" type="hidden">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="form-control-label col-sm-2" for="illusion_priority">Priority</label>
+                        <div class="col-sm-2">
+                            <input class="form-control{{ $errors->has('illusion_priority') ? ' is-invalid' : '' }} form-control-sm" id="illusion_priority" name="illusion_priority" type="number" placeholder="Priority">
+                            @if ($errors->has('illusion_priority'))
+                                <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('illusion_priority') }}</strong>
+                            </span>
+                            @endif
+                        </div>
+                        <label class="form-control-label col-sm-2" for="illusion_status">Visibility</label>
+                        <div class="col-sm-2">
+                            <select class="form-control form-control-sm" id="illusion_status" name="illusion_status">
+                                <option>1</option>
+                                <option>2</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                    <input class="btn btn-primary offset-sm-5" type="submit">
                     <a class="btn btn-secondary offset-sm-1" href="#">Cancel</a>
+                    </div>
                 </div>
             </form>
             <div class="clearfix"></div>
