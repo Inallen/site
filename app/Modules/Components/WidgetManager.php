@@ -35,10 +35,10 @@ class WidgetManager
                     $sideMenusItem->setMenuItemActive(true);
                     return $this->sideMenusItems;
                 }
-                if ($sideMenusItem->subMenus->count() > 0) {
-                    foreach ($sideMenusItem->subMenus as $subMenusItem) {
-                        if ($subMenusItem->menu_entry == $this->routeName) {
-                            $subMenusItem->setMenuItemActive(true);
+                if ($sideMenusItem->childMenus->count() > 0) {
+                    foreach ($sideMenusItem->childMenus as $childMenusItem) {
+                        if ($childMenusItem->menu_entry == $this->routeName) {
+                            $childMenusItem->setMenuItemActive(true);
                             $sideMenusItem->setMenuItemActive(true);
                             return $this->sideMenusItems;
                         }

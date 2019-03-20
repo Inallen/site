@@ -2,24 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Illusion;
+use App\Term;
+use App\TermTaxonomy;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 
-class IllusionController extends Controller
+class TermController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -27,9 +18,9 @@ class IllusionController extends Controller
      */
     public function index()
     {
-        $illusions = Illusion::paginate(15);
-        return view('admin.illusion.index',
-            ['illusions' => $illusions]
+        $terms = Term::paginate(15);
+        return view('admin.term.index',
+            ['terms' => $terms]
         );
     }
 
@@ -40,7 +31,7 @@ class IllusionController extends Controller
      */
     public function create()
     {
-        return view('admin.illusion.create');
+        //
     }
 
     /**
@@ -51,19 +42,24 @@ class IllusionController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validateIllusion($request);
+        $this->validateTerm($request);
         $data = $request->all();
-        $illusion = Illusion::create([
-            'illusion_owner' => Auth::user()->id,
-            'title' => $data['title'],
-            'slug' => isset($data['slug']) ? $data['slug'] : null,
-            'content' => $data['content'],
-            'excerpt' => $data['excerpt'],
-            'thumbnail' => $data['thumbnail'],
-            'illusion_priority' => $data['illusion_priority'],
-            'illusion_status' => $data['illusion_status'],
-        ]);
-        return Redirect::route('admin.illusion.index');
+        DB::beginTransaction();
+        try{
+            $term = Term::create([
+                'term_title' => $data['term_title'],
+                'term_slug' => isset($data['term_slug']) ? $data['term_slug'] : null,
+            ]);
+            TermTaxonomy::create([
+                'term_id' => $term->id,
+                'term_taxonomy' => isset($data['term_taxonomy']) ? $data['term_taxonomy'] : 'category',
+                'term_taxonomy_parent' => $data['term_taxonomy_parent'],
+            ]);
+            DB::commit();
+        }catch (\Exception $e) {
+            DB::rollBack();
+        }
+        return Redirect::route('admin.term.index');
     }
 
     /**
@@ -111,16 +107,12 @@ class IllusionController extends Controller
         //
     }
 
-    protected function validateIllusion(Request $request)
+    protected function validateTerm(Request $request)
     {
         $request->validate([
-            'title' => 'required|string|max:255',
-            'slug' => 'nullable|unique:illusion|string',
-            'content' => 'required|string',
-            'excerpt' => 'nullable|string',
-            'thumbnail' => 'nullable|url',
-            'illusion_priority' => 'required|integer',
-            'illusion_status' => 'required|integer',
+            'term_title' => 'required|string|max:255',
+            'term_slug' => 'nullable|unique:terms|string|max:255',
+            'term_taxonomy_parent' => 'nullable|integer',
         ]);
     }
 }

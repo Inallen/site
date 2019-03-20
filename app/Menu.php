@@ -22,12 +22,12 @@ class Menu extends Model
     protected $is_active_menu_item = false;
 
 
-    public function subMenus()
+    public function childMenus()
     {
         return $this->hasMany('App\Menu', 'menu_parent');
     }
 
-    public function supMenu()
+    public function parentMenu()
     {
         return $this->belongsTo('App\Menu', 'menu_parent');
     }
