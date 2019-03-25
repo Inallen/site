@@ -13,8 +13,10 @@ const mix = require('laravel-mix');
 
 mix.js('resources/js/app.js', 'public/js');
 mix.js('resources/plugins/index.js', 'public/plugins/');
+mix.js('resources/js/vali/admin.base.js', 'public/js');
 mix.js('resources/js/vali/admin.illusion.js', 'public/js');
 mix.scripts([
+    'public/js/admin.base.js',
     'public/js/admin.illusion.js',
 ], 'public/js/vali.js');
 mix.copyDirectory('resources/plugins/ckeditor5', 'public/plugins/ckeditor5');

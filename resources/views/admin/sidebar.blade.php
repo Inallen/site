@@ -4,12 +4,11 @@
 <aside class="app-sidebar">
     <div class="app-sidebar__user">
         <img class="app-sidebar__user-avatar"
-             @if (Auth::user()->avatar)
+             @if (Auth::user() && Auth::user()->avatar)
                 src="{{ Auth::user()->avatar }}"
              @else
                 src="{{ asset('images/avatar.png') }}"
              @endif
-
              alt="User Image">
         <div>
             <p class="app-sidebar__user-name">{{ Auth::user()->name }}</p>

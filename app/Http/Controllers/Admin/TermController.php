@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Term;
 use App\TermTaxonomy;
+use App\Utils\Traits\TermTaxonomyParser;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\Redirect;
 
 class TermController extends Controller
 {
+    use TermTaxonomyParser;
     /**
      * Display a listing of the resource.
      *
@@ -18,9 +20,15 @@ class TermController extends Controller
      */
     public function index()
     {
-        $terms = Term::paginate(15);
+        $this->termTaxonomies = TermTaxonomy::where('term_taxonomy_parent', 0)
+            ->where('term_taxonomy', 'category')
+            ->get();
+
         return view('admin.term.index',
-            ['terms' => $terms]
+            [
+                'termTaxonomies' => $this->getTaxonomies($this->termTaxonomies),
+                'termOptions' => $this->getTaxonomyOptions($this->termTaxonomies)
+            ]
         );
     }
 

@@ -25,7 +25,6 @@
                 <div class="tile">
                     <h3 class="tile-title">Add New Category</h3>
                     <div class="tile-body">
-                        {{$errors}}
                         <form class="form-horizontal" method="POST" action="{{ route('admin.term.store') }}">
                             @csrf
                             <div class="form-group row">
@@ -55,11 +54,13 @@
                                 <div class="col-sm-9">
                                     <select class="form-control" id="term_taxonomy_parent" name="term_taxonomy_parent">
                                         <option value="0">None</option>
-                                        <option>&nbsp;&nbsp;&nbsp;2</option>
+                                        @foreach ($termOptions as $key => $value)
+                                            <option value="{{ $key }}">{!! $value !!}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group row">
+                            {{--<div class="form-group row">
                                 <label class="form-control-label col-sm-2" for="term_priority">Priority</label>
                                 <div class="col-sm-9">
                                     <input class="form-control{{ $errors->has('term_priority') ? ' is-invalid' : '' }}" id="term_priority" name="term_priority" type="number" placeholder="Priority">
@@ -69,7 +70,7 @@
                                         </span>
                                     @endif
                                 </div>
-                            </div>
+                            </div>--}}
                             <div class="tile-footer">
                                 <div class="row">
                                     <div class="col-sm-9 col-md-offset-3">
@@ -84,10 +85,24 @@
             <div class="clearix"></div>
             <div class="col-lg-8">
                 <div class="tile">
+                    <div class="tile-title">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <select class="form-control" id="term_taxonomy_parent" name="term_taxonomy_parent">
+                                    <option>{{ __('Bulk Actions') }}</option>
+                                    <option>{{ __('Delete') }}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                     <div class="tile-body">
-                        <table class="table table-hover table-bordered" id="sampleTable">
+
+                        <table class="table table-hover table-bordered" id="termTable">
                             <thead>
                             <tr>
+                                <th>
+                                    <input class="form-check-parent" type="checkbox">
+                                </th>
                                 <th>ID</th>
                                 <th>Title</th>
                                 <th>Slug</th>
@@ -95,12 +110,13 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach ($terms as $term)
+                            @foreach ($termTaxonomies as $termTaxonomy)
                                 <tr>
-                                    <td>{{ $term->id }}</td>
-                                    <td>{{ $term->term_title }}</td>
-                                    <td>{{ $term->term_slug }}</td>
-                                    <td>{{ $term->updated_at }}</td>
+                                    <td><input class="form-check-child" type="checkbox"></td>
+                                    <td>{{ $termTaxonomy->id }}</td>
+                                    <td>{{ $termTaxonomy->term->term_title }}</td>
+                                    <td>{{ $termTaxonomy->term->term_slug }}</td>
+                                    <td>{{ $termTaxonomy->updated_at }}</td>
                                 </tr>
                             @endforeach
                             </tbody>
