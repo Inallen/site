@@ -53,7 +53,12 @@
                     <div class="form-group row">
                         <label class="form-control-label col-sm-2" for="categories">Categories</label>
                         <div class="col-sm-9">
-                            <input class="form-control" id="categories" type="text">
+                            <select class="form-control" id="categories" name="categories">
+                                <option value="0">None</option>
+                                @foreach ($termTaxonomies as $termTaxonomy)
+                                    <option value="{{ $termTaxonomy->id }}">{!! str_repeat("&nbsp;&nbsp;&nbsp;",$termTaxonomy->getLevel()) !!}{{ $termTaxonomy->term->term_title }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="form-group row">
@@ -83,8 +88,8 @@
                         </div>
                     </div>
                     <div class="form-group row">
-                    <input class="btn btn-primary offset-sm-5" type="submit">
-                    <a class="btn btn-secondary offset-sm-1" href="#">Cancel</a>
+                        <input class="btn btn-primary offset-sm-5" type="submit">
+                        <a class="btn btn-secondary offset-sm-1" href="#">Cancel</a>
                     </div>
                 </div>
             </form>

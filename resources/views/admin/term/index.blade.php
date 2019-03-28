@@ -54,8 +54,8 @@
                                 <div class="col-sm-9">
                                     <select class="form-control" id="term_taxonomy_parent" name="term_taxonomy_parent">
                                         <option value="0">None</option>
-                                        @foreach ($termOptions as $key => $value)
-                                            <option value="{{ $key }}">{!! $value !!}</option>
+                                        @foreach ($termTaxonomies as $termTaxonomy)
+                                            <option value="{{ $termTaxonomy->id }}">{!! str_repeat("&nbsp;&nbsp;&nbsp;",$termTaxonomy->getLevel()) !!}{{ $termTaxonomy->term->term_title }}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -86,37 +86,42 @@
             <div class="col-lg-8">
                 <div class="tile">
                     <div class="tile-title">
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <select class="form-control" id="term_taxonomy_parent" name="term_taxonomy_parent">
-                                    <option>{{ __('Bulk Actions') }}</option>
-                                    <option>{{ __('Delete') }}</option>
-                                </select>
-                            </div>
-                        </div>
+
                     </div>
                     <div class="tile-body">
-
-                        <table class="table table-hover table-bordered" id="termTable">
+                        <div class="form-group row">
+                            <div class="col-sm-3">
+                                <select class="form-control form-control-sm" id="bulk-actions" name="bulk-actions">
+                                    <option value="">{{ __('Bulk Actions') }}</option>
+                                    <option value="delete">{{ __('Delete') }}</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-3">
+                                <button class="btn btn-primary btn-sm" id="apply-button" type="button">{{ __('Apply') }}</button>
+                            </div>
+                        </div>
+                        <table class="table table-hover table-bordered" id="termTaxonomyTable">
                             <thead>
                             <tr>
                                 <th>
                                     <input class="form-check-parent" type="checkbox">
                                 </th>
-                                <th>ID</th>
+                                {{--<th>ID</th>--}}
                                 <th>Title</th>
                                 <th>Slug</th>
                                 <th>Updated At</th>
+                                <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach ($termTaxonomies as $termTaxonomy)
                                 <tr>
-                                    <td><input class="form-check-child" type="checkbox"></td>
-                                    <td>{{ $termTaxonomy->id }}</td>
-                                    <td>{{ $termTaxonomy->term->term_title }}</td>
+                                    <td><input class="form-check-child" data-id="{{ $termTaxonomy->id }}" type="checkbox"></td>
+                                    {{--<td>{{ $termTaxonomy->id }}</td>--}}
+                                    <td>{{ str_repeat(" - ",$termTaxonomy->getLevel()) }}{{ $termTaxonomy->term->term_title }}</td>
                                     <td>{{ $termTaxonomy->term->term_slug }}</td>
                                     <td>{{ $termTaxonomy->updated_at }}</td>
+                                    <td></td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -128,5 +133,35 @@
     </main>
 @endsection
 @section('script')
-    <script src="{{ asset('js/vali.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/vali.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/plugins/jquery.dataTables.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/plugins/dataTables.bootstrap.min.js') }}"></script>
+    <script type="text/javascript">
+        $("#termTaxonomyTable").DataTable(
+            {
+                "paging":   false,
+                "info":     false,
+                "filter":   false
+            }
+        );
+
+        $('#apply-button').on('click', function () {
+            var checkedIds= [];
+            $("input:checkbox[class='form-check-child']:checked").each(function() {
+                checkedIds.push($(this).data('id'));
+            });
+            axios.post('{{ Route::has('admin.term.operate') ? route('admin.term.operate') : '#' }}', {
+                action: $("#bulk-actions").val(),
+                ids: checkedIds.toString()
+            })
+            .then(function (response) {
+                if (response['status'] == '200' && response['data'] == true) {
+                    window.location.reload();
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        });
+    </script>
 @endsection

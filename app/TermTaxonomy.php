@@ -15,6 +15,8 @@ class TermTaxonomy extends Model
         'count',
     ];
 
+    protected $level;
+
     protected $table = 'term_taxonomy';
 
     public function term()
@@ -31,4 +33,22 @@ class TermTaxonomy extends Model
     {
         return $this->belongsTo('App\TermTaxonomy', 'term_taxonomy_parent');
     }
+
+    /**
+     * @return integer
+     */
+    public function getLevel()
+    {
+        return $this->level;
+    }
+
+    /**
+     * @param integer $level
+     */
+    public function setLevel($level)
+    {
+        $this->level = $level;
+    }
+
+
 }

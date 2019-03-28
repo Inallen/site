@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Illusion;
+use App\Utils\Traits\TermTaxonomyParser;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -10,6 +11,8 @@ use Illuminate\Support\Facades\Redirect;
 
 class IllusionController extends Controller
 {
+    use TermTaxonomyParser;
+
     /**
      * Create a new controller instance.
      *
@@ -40,7 +43,11 @@ class IllusionController extends Controller
      */
     public function create()
     {
-        return view('admin.illusion.create');
+        return view('admin.illusion.create',
+            [
+                'termTaxonomies' => $this->getAllTaxonomies(),
+            ]
+        );
     }
 
     /**

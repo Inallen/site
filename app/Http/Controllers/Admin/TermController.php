@@ -20,14 +20,9 @@ class TermController extends Controller
      */
     public function index()
     {
-        $this->termTaxonomies = TermTaxonomy::where('term_taxonomy_parent', 0)
-            ->where('term_taxonomy', 'category')
-            ->get();
-
         return view('admin.term.index',
             [
-                'termTaxonomies' => $this->getTaxonomies($this->termTaxonomies),
-                'termOptions' => $this->getTaxonomyOptions($this->termTaxonomies)
+                'termTaxonomies' => $this->getAllTaxonomies(),
             ]
         );
     }
@@ -67,7 +62,7 @@ class TermController extends Controller
         }catch (\Exception $e) {
             DB::rollBack();
         }
-        return Redirect::route('admin.term.index');
+        return redirect()->route('admin.term.index');
     }
 
     /**
@@ -115,6 +110,38 @@ class TermController extends Controller
         //
     }
 
+    public function buckOperate(Request $request)
+    {
+        $action = $request->get('action');
+        $ids = $request->get('ids');
+        $taxonomyIds = explode(',', $ids);
+        if (!empty($action) && !empty($taxonomyIds)) {
+            switch ($action){
+                case 'delete':
+                    DB::beginTransaction();
+                    try{
+                        foreach ($taxonomyIds as $taxonomyId) {
+                            $taxonomy = TermTaxonomy::find($taxonomyId);
+                            Term::destroy($taxonomy->term_id);
+                            TermTaxonomy::where('term_taxonomy_parent', $taxonomy->id)
+                                ->update(['term_taxonomy_parent' => 0]);
+                        }
+                        TermTaxonomy::destroy($taxonomyIds);
+                        DB::commit();
+                    }catch (\Exception $e) {
+                        DB::rollBack();
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+        return response()->json(true);
+    }
+
+    /**
+     * @param Request $request
+     */
     protected function validateTerm(Request $request)
     {
         $request->validate([
