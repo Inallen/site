@@ -4,22 +4,16 @@
     {{--<link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">--}}
 @endsection
 @section('content')
-    @component('admin.header')
-    @endcomponent
-    @component('admin.sidebar')
-    @endcomponent
     <main class="app-content">
-        <div class="app-title">
-            <div>
-                <h1><i class="fa fa-edit"></i> Cards</h1>
-                <p>Material design inspired cards</p>
-            </div>
-            <ul class="app-breadcrumb breadcrumb side">
-                <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-                <li class="breadcrumb-item">Tables</li>
-                <li class="breadcrumb-item active"><a href="#">Data Table</a></li>
-            </ul>
-        </div>
+        @component('admin.component.app_title')
+            @slot('app_icon')
+            @endslot
+            @slot('app_title')
+                {{ __('Categories') }}
+            @endslot
+            @slot('app_description')
+            @endslot
+        @endcomponent
         <div class="row">
             <div class="term-tile col-lg-4">
                 <div class="tile">
@@ -121,7 +115,7 @@
                                     <td>{{ str_repeat(" - ",$termTaxonomy->getLevel()) }}{{ $termTaxonomy->term->term_title }}</td>
                                     <td>{{ $termTaxonomy->term->term_slug }}</td>
                                     <td>{{ $termTaxonomy->updated_at }}</td>
-                                    <td></td>
+                                    <td><a class="btn btn-primary btn-sm" href="{{ Route::has('admin.term.edit') ? route('admin.term.edit', ['id' => $termTaxonomy->id]) : '#' }}"><i class="fa fa-edit"></i>{{ __('Edit') }}</a></td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -131,6 +125,7 @@
             </div>
         </div>
     </main>
+
 @endsection
 @section('script')
     <script type="text/javascript" src="{{ asset('js/vali.js') }}"></script>
@@ -144,7 +139,6 @@
                 "filter":   false
             }
         );
-
         $('#apply-button').on('click', function () {
             var checkedIds= [];
             $("input:checkbox[class='form-check-child']:checked").each(function() {

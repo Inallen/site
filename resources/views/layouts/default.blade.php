@@ -19,6 +19,8 @@
     @yield('link')
 </head>
 <body class="app sidebar-mini rtl">
+@include('admin.header')
+@include('admin.sidebar')
 @yield('content')
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="{{ asset('js/main.js') }}"></script>

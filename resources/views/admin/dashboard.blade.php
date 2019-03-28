@@ -4,10 +4,6 @@
     {{--<link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">--}}
 @endsection
 @section('content')
-    @component('admin.header')
-    @endcomponent
-    @component('admin.sidebar')
-    @endcomponent
     <main class="app-content">
         <div class="app-title">
             <div>

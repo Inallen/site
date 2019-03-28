@@ -28,6 +28,6 @@ Route::prefix('admin')->name('admin.')->namespace('Admin')->group(function () {
         'term' => 'TermController',
     ]);
 
-    Route::post('/term/operate', 'TermController@buckOperate')->name('term.operate');
+    Route::post('/term_operate', 'TermController@buckOperate')->name('term.operate');
     Route::get('/media', 'FileController@ckfinder')->name('media');
 });

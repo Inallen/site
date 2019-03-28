@@ -84,7 +84,13 @@ class TermController extends Controller
      */
     public function edit($id)
     {
-        //
+        $taxonomy = TermTaxonomy::find($id);
+        return view('admin.term.edit',
+            [
+                'taxonomy' => $taxonomy,
+                'termTaxonomies' => $this->getAllTaxonomies(),
+            ]
+        );
     }
 
     /**
@@ -96,7 +102,26 @@ class TermController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validateTerm($request);
+        $data = $request->all();
+        $taxonomy = TermTaxonomy::find($id);
+        DB::beginTransaction();
+        try{
+            Term::where('id', $taxonomy->term_id)
+                ->update([
+                    'term_title' => $data['term_title'],
+                    'term_slug' => isset($data['term_slug']) ? $data['term_slug'] : null,
+                ]);
+            TermTaxonomy::where('id', $taxonomy->id)
+                ->update([
+                    'term_taxonomy' => isset($data['term_taxonomy']) ? $data['term_taxonomy'] : 'category',
+                    'term_taxonomy_parent' => $data['term_taxonomy_parent'],
+                ]);
+            DB::commit();
+        }catch (\Exception $e) {
+            DB::rollBack();
+        }
+        return redirect()->route('admin.term.index');
     }
 
     /**
