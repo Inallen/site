@@ -11,7 +11,7 @@
              @endif
              alt="User Image">
         <div>
-            <p class="app-sidebar__user-name">{{ Auth::user()->name }}</p>
+            <p class="app-sidebar__user-name">{{ Auth::user() ? Auth::user()->name : ''}}</p>
             <p class="app-sidebar__user-designation"> {{ Request::route()->getName() }}</p>
         </div>
     </div>
