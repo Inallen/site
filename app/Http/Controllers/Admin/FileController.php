@@ -28,4 +28,18 @@ class FileController extends Controller
     {
         return view('admin.media.ckfinder');
     }
+
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $path = $request->file('file')->store('uploads/images', 'public');
+
+        return [ 'msg' => 'success', 'url' => Storage::url($path)];
+    }
 }

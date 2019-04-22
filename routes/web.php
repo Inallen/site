@@ -27,6 +27,9 @@ Route::prefix('admin')->name('admin.')->namespace('Admin')->group(function () {
     Route::resources([
         'term' => 'TermController',
     ]);
+    Route::resources([
+        'file' => 'FileController',
+    ]);
 
     Route::post('/term_operate', 'TermController@buckOperate')->name('term.operate');
     Route::get('/media', 'FileController@ckfinder')->name('media');

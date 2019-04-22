@@ -5,17 +5,15 @@
 @endsection
 @section('content')
     <main class="app-content">
-        <div class="app-title">
-            <div>
-                <h1><i class="fa fa-edit"></i> Cards</h1>
-                <p>Material design inspired cards</p>
-            </div>
-            <ul class="app-breadcrumb breadcrumb">
-                <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-                <li class="breadcrumb-item">{{ config('ckfinder.backends.default.root') }}</li>
-                <li class="breadcrumb-item"><a href="#">{{ config('ckfinder.backends.default.baseUrl') }}</a></li>
-            </ul>
-        </div>
+        @component('admin.component.app_title')
+            @slot('app_icon')
+            @endslot
+            @slot('app_title')
+                {{ __('Categories') }}
+            @endslot
+            @slot('app_description')
+            @endslot
+        @endcomponent
         <div class="illusion-tile col-lg-10">
             <form class="tile" method="POST" action="{{ route('admin.illusion.store') }}">
                 @csrf

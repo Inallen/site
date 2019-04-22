@@ -93,13 +93,61 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var FileUploadAdapter =
+/*#__PURE__*/
+function () {
+  function FileUploadAdapter(loader) {
+    _classCallCheck(this, FileUploadAdapter);
+
+    this.loader = loader;
+  }
+
+  _createClass(FileUploadAdapter, [{
+    key: "upload",
+    value: function upload() {
+      var _this = this;
+
+      return new Promise(function (resolve, reject) {
+        var data = new FormData();
+        data.append('file', _this.loader.file);
+        data.append('allowSize', 10); //允许图片上传的大小/兆
+
+        axios.post(uploadUrl, data).then(function (response) {
+          if (response.data.msg == 'success') {
+            resolve({
+              default: response.data.url
+            });
+          } else {
+            reject(response.data.msg);
+          }
+        }).catch(function (response) {
+          reject('Upload failed');
+          ;
+        });
+      });
+    }
+  }, {
+    key: "abort",
+    value: function abort() {}
+  }]);
+
+  return FileUploadAdapter;
+}();
+
 ClassicEditor.create(document.querySelector('.ckeditor'), {
   // toolbar: [ 'heading', '|', 'bold', 'italic', 'link' ]
-  language: locale,
-  ckfinder: {
-    uploadUrl: uploadUrl
-  }
+  language: locale
 }).then(function (editor) {
+  editor.plugins.get('FileRepository').createUploadAdapter = function (loader) {
+    return new FileUploadAdapter(loader);
+  };
+
   editor.ui.view.editable.editableElement.style.height = '460px';
   window.editor = editor;
 }).catch(function (err) {
